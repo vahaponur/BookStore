@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DataAccess;
 using DataAccess.BookOperations.CreateBook;
+using DataAccess.BookOperations.DeleteBook;
 using DataAccess.BookOperations.GetBooks;
 using DataAccess.BookOperations.UpdateBook;
 using Entities;
@@ -89,15 +90,20 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var book = _context.Books.SingleOrDefault(b => b.Id == id);
-            if (book != null)
+            DeleteBookCommand command = new DeleteBookCommand(_context);
+            try
             {
-                _context.Books.Remove(book);
-                _context.SaveChanges();
-                return Ok(book.BookName + " Silindi");
+                command.BookId = id;
+                command.Handle();
+                return Ok("Silindi");
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
             }
 
-            return BadRequest("Kitap Bulunamadı");
+   
         }
 
     }
