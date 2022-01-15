@@ -20,7 +20,7 @@ namespace DataAccess
                     {
                         
                         GenreId = 1,
-                        BookName = "Silmarillion",
+                        Title = "Silmarillion",
                         PageCount = 564,
                         PublishDate = new DateTime(2001,06,12)
                     },
@@ -28,7 +28,7 @@ namespace DataAccess
                     {
                       
                         GenreId = 2,
-                        BookName = "Metro 2033",
+                        Title = "Metro 2033",
                         PageCount = 350,
                         PublishDate = new DateTime(2003,06,12)
                     },
@@ -36,7 +36,7 @@ namespace DataAccess
                     {
           
                         GenreId = 2,
-                        BookName = "The Name of the Wind",
+                        Title = "The Name of the Wind",
                         PageCount = 780,
                         PublishDate = new DateTime(2003,06,12)
                     });

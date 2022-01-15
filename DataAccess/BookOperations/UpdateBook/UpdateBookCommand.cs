@@ -27,7 +27,7 @@ namespace DataAccess.BookOperations.UpdateBook
             book.GenreId = Model.GenreId != default ? Model.GenreId : book.GenreId;
             book.PageCount = Model.PageCount != default ? Model.PageCount : book.PageCount;
             book.PublishDate = Model.PublishDate != default ? Model.PublishDate : book.PublishDate;
-            book.BookName = Model.Title ?? book.BookName;
+            book.Title = Model.Title ?? book.Title;
    
             _dbContext.SaveChanges();
 

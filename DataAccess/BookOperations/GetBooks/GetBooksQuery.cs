@@ -4,34 +4,36 @@ using Entities;
 using System.Linq;
 using Core;
 using Entities.Enums;
+using AutoMapper;
 
 namespace DataAccess.BookOperations.GetBooks
 {
     public class GetBooksQuery
     {
         private readonly BookStoreDbContext _dbContext;
-
-        public GetBooksQuery(BookStoreDbContext dbContext)
+        readonly IMapper _mapper;
+        public GetBooksQuery(BookStoreDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public List<BooksViewModel> Handle()
         {
             var booksList =_dbContext.Books.OrderBy(e => e.Id).ToList();
-            List<BooksViewModel> viewModels = new List<BooksViewModel>();
-            foreach (var book in booksList)
-            {
-                var bvm = new BooksViewModel
-                {
-                    Title = book.BookName,
-                    Genre = ((GenreEnum) book.GenreId).ToDescription(),
-                    PublishDate = book.PublishDate.Date.ToString(),
-                    PageCount = book.PageCount
+            List<BooksViewModel> viewModels = _mapper.Map<List<BooksViewModel>>(booksList);
+            //foreach (var book in booksList)
+            //{
+            //    var bvm = new BooksViewModel
+            //    {
+            //        Title = book.Title,
+            //        Genre = ((GenreEnum) book.GenreId).ToDescription(),
+            //        PublishDate = book.PublishDate.Date.ToString(),
+            //        PageCount = book.PageCount
                     
-                };
-                viewModels.Add(bvm);
-            }
+            //    };
+            //    viewModels.Add(bvm);
+            //}
 
             return viewModels;
         }

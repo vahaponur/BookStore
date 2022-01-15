@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using DataAccess;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +35,7 @@ namespace WebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "WebAPI", Version = "v1"});
             });
             services.AddDbContext<BookStoreDbContext>(options=> options.UseInMemoryDatabase("BookStoreDb"));
+            services.AddAutoMapper(typeof(Startup).Assembly, typeof(DataAccess.Common.MappingProfile).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

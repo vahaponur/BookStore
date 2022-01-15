@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper;
 using Core;
 using Entities.Enums;
 
@@ -9,13 +10,14 @@ namespace DataAccess.BookOperations.GetBooks
     {
         public int BookId { get; set; }
         private readonly BookStoreDbContext _dbContext;
-
-        public GetBookByIdQuery(BookStoreDbContext dbContext)
+        readonly IMapper _mapper;
+        public GetBookByIdQuery(BookStoreDbContext dbContext,IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public BookViewModel Handle()
+        public BookDetailViewModel Handle()
         {
             var book = _dbContext.Books.FirstOrDefault(e => e.Id == BookId);
             if (book is null)
@@ -23,18 +25,12 @@ namespace DataAccess.BookOperations.GetBooks
                 throw new InvalidOperationException("Böyle bir kitap bulunamadı");
             }
 
-            var bvm = new BookViewModel
-            {
-                Genre = ((GenreEnum)book.GenreId).ToDescription(),
-                Title = book.BookName,
-                PageCount = book.PageCount,
-                PublishDate = book.PublishDate.ToString()
-            };
+            var bvm = _mapper.Map<BookDetailViewModel>(book);
             return bvm;
         }
     }
 
-    public class BookViewModel
+    public class BookDetailViewModel
     {
         public string Title { get; set; }
         public int PageCount { get; set; }
