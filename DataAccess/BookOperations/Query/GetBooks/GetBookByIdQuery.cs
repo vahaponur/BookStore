@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using Core;
 using Entities.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.BookOperations.GetBooks
 {
@@ -19,7 +20,7 @@ namespace DataAccess.BookOperations.GetBooks
 
         public BookDetailViewModel Handle()
         {
-            var book = _dbContext.Books.FirstOrDefault(e => e.Id == BookId);
+            var book = _dbContext.Books.Include(x=>x.Genre).FirstOrDefault(e => e.Id == BookId);
             if (book is null)
             {
                 throw new InvalidOperationException("Böyle bir kitap bulunamadı");

@@ -5,6 +5,7 @@ using System.Linq;
 using Core;
 using Entities.Enums;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.BookOperations.GetBooks
 {
@@ -20,7 +21,7 @@ namespace DataAccess.BookOperations.GetBooks
 
         public List<BooksViewModel> Handle()
         {
-            var booksList =_dbContext.Books.OrderBy(e => e.Id).ToList();
+            var booksList =_dbContext.Books.Include(s=>s.Genre).OrderBy(e => e.Id).ToList();
             List<BooksViewModel> viewModels = _mapper.Map<List<BooksViewModel>>(booksList);
             //foreach (var book in booksList)
             //{

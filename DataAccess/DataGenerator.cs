@@ -12,6 +12,19 @@ namespace DataAccess
         {
             using (var context = new BookStoreDbContext(serviceProvider.GetRequiredService<DbContextOptions<BookStoreDbContext>>()))
             {
+
+                context.Authors.AddRange(new Author {BirthOfDate=new DateTime(1960,10,30),FirstName="Vahap",LastName="YILDIRIM" },
+                    new Author {BirthOfDate=new DateTime(1990,05,30),FirstName="Alaattin",LastName="DİRİ" });
+                context.Genres.AddRange(new Genre
+                {
+                    IsActive=true,
+                    Name="Science Fiction"
+                },
+                new Genre { Name="Medieval Fantasy"},
+                new Genre { Name="Politics"}
+
+
+                );
                 if (context.Books.Any())
                 {
                     return;
